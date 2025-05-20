@@ -1,0 +1,29 @@
+import logging
+from telegram import Update
+from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
+
+# Ganti ini dengan token botmu sendiri
+BOT_TOKEN = "8176637251:AAGwyrR_XAKIPUmENBJKsQgrtNBqPaXNlXo"
+
+# Setup logging
+logging.basicConfig(
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    level=logging.INFO
+)
+
+# Contoh fungsi kirim sinyal
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text("Bot sinyal kripto aktif!")
+
+async def signal(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    # Contoh sinyal dummy
+    signal_text = "Sinyal Hari Ini:\nBTC/USDT BUY 65500 - TP 66500 - SL 64800"
+    await update.message.reply_text(signal_text)
+
+if __name__ == '__main__':
+    app = ApplicationBuilder().token(BOT_TOKEN).build()
+
+    app.add_handler(CommandHandler("start", start))
+    app.add_handler(CommandHandler("signal", signal))
+
+    app.run_polling()
